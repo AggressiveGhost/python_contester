@@ -11,9 +11,9 @@ def index(request): # shows 4 last popular tasks by number of clics
 
 
 def currentTask(request, task_id):
-    taskEvery = Task.object.get(id = task_id)
+    taskEvery = Task.objects.get(id = task_id)
     taskEvery.clicks += 1
-    return render(request, 'myFirstApp/every.html', content={'task':taskEvery})
+    return render(request, 'myFirstApp/every.html', {'task':taskEvery})
 
 # def getImg(request):
 #     if request.method == 'GET':

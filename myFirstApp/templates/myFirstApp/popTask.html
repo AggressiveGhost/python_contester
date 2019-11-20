@@ -14,7 +14,7 @@
     {% for i in popularTask %}
         <div class="tilt2">
             <div class="col-lg-2 col-lg-offset-1">
-                <a href=""><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
+                <a href={%url 'currentTask' i.id%}><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
                 <p>
                 {{ i.task_name }} 
                 </p>

@@ -15,6 +15,6 @@ class Task(models.Model):
         return str(self.task_name)
 
     def getCurrentTask(self):
-        return reverse('currentTask', kwargs={'currentId':self.id})
+        return reverse_lazy('currentTask', kwargs={'currentId':self.id})
 
 
