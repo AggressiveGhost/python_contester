@@ -1,0 +1,39 @@
+{% extends 'myFirstApp/index.html' %}
+
+{% load static %}
+
+{% block pop %}
+    <h4>Popular problem</h4>
+    <br><br><br>
+    
+    <div class="container">
+        <div class="row justify-content-md-center">
+
+        <br><br>
+
+    {% for i in popularTask %}
+        <div class="tilt2">
+            <div class="col-lg-2 col-lg-offset-1">
+                <a href=""><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
+                <p>
+                {{ i.task_name }} 
+                </p>
+            </div>
+        </div> 
+    {% endfor %}
+
+       
+        </div>
+    </div>
+            <br><br><br>
+                <a href="task.html">  <button type="button" class="btn btn-dark">More problems </button></a>
+{% endblock %}
+
+
+{% block qq %}
+    {% for nam in fu %}
+    <p>
+      {{nam}}
+    </p>
+    {% endfor %} 
+{% endblock %}
