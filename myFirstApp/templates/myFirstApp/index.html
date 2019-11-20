@@ -121,7 +121,8 @@
     </div>
   </div>
 
-  <div id="lg">
+{% comment %} Popular Tasks {% endcomment %}
+  <div id="lg"> 
     {% block pop %}
     {% endblock %}
     <br><br>
@@ -129,15 +130,11 @@
 
 
   <div id="r">
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-lg-8 col-lg-offset-2">
-          <h4>Razrabotka</h4>
-          <p>I know this is not simple task, but it is no reason to GIVE UP</p>
-    </div>
-      </div>
-    </div>
+    {% block statistic %}
+    {% endblock  %}
   </div>
+
+  
   <div id="f">
     <div class="container">
         <div class="row justify-content-md-center">
@@ -180,10 +177,6 @@
     </div>
 
 
-
-{% block qq %}
-
-{% endblock %}
 
 
   </body>

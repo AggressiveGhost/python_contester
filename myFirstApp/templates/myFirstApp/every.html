@@ -14,7 +14,7 @@
   <body>
     <div class="container">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="ind.html">
+    <a class="navbar-brand" href="">
       <img src="img/logo.svg" alt="" width="70" height="70">
       PYTH<i class="fa fa-circle"></i>N Contester
     </a>
@@ -50,7 +50,7 @@
 
 {% comment %} start {% endcomment %}
 
-
+{% if  task %}
 <div class="container">
   <div class="row centered">
 
@@ -58,13 +58,13 @@
     <table class="table table-striped table-dark"width="90%">
       <thead>
         <tr>
-          <th scope="col">{{ taskEvery.task_name }}</th>
+          <th scope="col">{{ task.task_name }}</th>
 
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row" height="200"><p> {{ taskEvery.task_text }} </p></th>
+          <th scope="row" height="200"><p> {{ task.task_text }} </p></th>
 
         </tr>
 
@@ -72,7 +72,7 @@
     </table>
  </div>
  </div>
-
+{% endif %}
 {% comment %} end {% endcomment %}
 
 <br> <br><br >
@@ -81,8 +81,9 @@
 <form>
 
   <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <label for="exampleFormControlTextarea1">Input your code here</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+    <button>Send Code</button>
   </div>
 </form>
 </div>

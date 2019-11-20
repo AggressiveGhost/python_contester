@@ -2,7 +2,8 @@
 
 {% load static %}
 
-{% block pop %}
+
+{% block pop %} 
     <h4>Popular problem</h4>
     <br><br><br>
     
@@ -30,10 +31,17 @@
 {% endblock %}
 
 
-{% block qq %}
-    {% for nam in fu %}
-    <p>
-      {{nam}}
-    </p>
-    {% endfor %} 
-{% endblock %}
+{% block statistic %}
+<div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-lg-8 col-lg-offset-2">
+          <h4>Razrabotka</h4>
+          <p>I know this is not simple task, but it is no reason to GIVE UP</p>
+          <p>{{ countTask }} Tasks</p> 
+          <p>{} Times solved</p>
+          <p> by {} Users </p>
+          
+    </div>
+      </div>
+    </div>
+{% endblock  %}
