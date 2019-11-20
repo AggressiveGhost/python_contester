@@ -7,5 +7,6 @@ from python_contester import settings
 
 urlpatterns = [
     path('', views.index, name = 'mainPage'),
-    path('currentTask/<int:task_id>/', views.currentTask, name='currentTask'),
+    path('currentTask/<int:task_id>/', views.currentTask, name='currentTask'),#every task
+    path('moreProblems/', views.moreProblems, name = 'moreProblems'),
 ]

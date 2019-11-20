@@ -12,11 +12,46 @@
    </head>
   <body>
 
-{% comment %} header {% endcomment %}
-{% block header %}
-{% endblock  %}
-    
-<br><br><br><br>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href=""">
+      <img src="static/logo.png" alt="" width="70" height="70">
+      PYTH<i class="fa fa-circle"></i>N Contester
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+      <div class="topnav">
+          <input type="text" placeholder="Search..">
+      </div>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user" aria-hidden="true"></i>   User
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="signIn.html">Sign In</a>
+              <a class="dropdown-item" href="registr.html">Registr</a>
+            </div>
+          </div>
+          </li>
+        </ul>
+      </div>
+      </nav>
+
+
+<br><br><br><br><br>
+
+{% block showEveryTask %}
+{% endblock %}    
+
+
 
 {% comment %} background {% endcomment %}
 {% block background %}

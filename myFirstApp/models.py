@@ -11,7 +11,7 @@ class Task(models.Model):
     clicks = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.task_name)
+        return str("{0} {1}".format(self.id ,self.task_name))
 
     def getCurrentTask(self):
         return reverse_lazy('currentTask', kwargs={'currentId':self.id})
