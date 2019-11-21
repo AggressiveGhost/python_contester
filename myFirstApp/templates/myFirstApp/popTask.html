@@ -1,5 +1,5 @@
 {% extends 'myFirstApp/index.html' %}
-{% load static %}
+{% comment %} {% load static %} {% endcomment %}
 
 
 
@@ -77,27 +77,76 @@
             skills will be required to solve most problems.
       </p>
 </div>
+
+<div class="col-lg-4">
+      <i class="fa fa-trophy"></i>
+      <h4>About Project Euler</h4>
+      <p>Project Euler is a series of challenging mathematical/computer
+           programming problems that will require more than just mathematical
+           insights to solve. Although mathematics will help you arrive at
+           elegant and efficient methods, the use of a computer and programming
+            skills will be required to solve most problems.
+      </p>
+</div>
+
+<div class="col-lg-4">
+      <i class="fa fa-trophy"></i>
+      <h4>About Project Euler</h4>
+      <p>Project Euler is a series of challenging mathematical/computer
+           programming problems that will require more than just mathematical
+           insights to solve. Although mathematics will help you arrive at
+           elegant and efficient methods, the use of a computer and programming
+            skills will be required to solve most problems.
+      </p>
+</div>
+
 {% endif %}
 {% endblock  %}
 
 {% comment %} NEWS {% endcomment %}
 {% block news %}
 {% if countTask %}
-<h4>News</h4>
 <br><br>
-<div class="col-lg-4">
-    <div class="tilt">
-        <a href="#"><img src = "static/news.png"width="300" height="400" alt =""></a>
+<div id= "dg">
+      <center><h4>News</h4></center>
+      <br>
+    <div class="container">
+      <p><a name="popular"></a>
+    <div class="row justify-content-md-center">
+
+        <br>
+        <div class="col-lg-4">
+          <div class="tilt">
+            <a href="#"><img src = "static/news.png" width="300" height="400" alt =""></a>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="tilt">
+            <a href="#"><img src = "static/news.png" width="300" height="400"alt =""></a>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="tilt">
+            <a href="#"><img src = "static/news.png"width="300" height="400" alt =""></a>
+          </div>
+        </div>
+      </div>
+    </p>
     </div>
-</div>
+  </div>
 {% endif %}
 {% endblock  %}
+
+
+
 
 {% comment %} POPULAR TASKS {% endcomment %}
 {% block pop %} 
 {% if task %}
-    <h4>{{ title }}</h4>
-    <br><br><br>
+{% comment %} <img src="static/logo.png" alt="" width="50" height="50"> {% endcomment %}
+<br><br>
+   <center> <h4>{{ title }}</h4></center>
+    <br>
     
     <div class="container">
         <div class="row justify-content-md-center">
@@ -108,9 +157,7 @@
         <div class="tilt2">
             <div class="col-lg-2 col-lg-offset-1">
                 <a href={%url 'currentTask' i.id%}><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
-                <p>
-                {{ i.task_name }} 
-                </p>
+                <p>{{ i.task_name }} </p>
             </div>
         </div> 
     {% endfor %}
@@ -119,7 +166,7 @@
         </div>
     </div>
     <br><br><br>
-    <a href={% url 'moreProblems' %} >  <button type="button" class="btn btn-dark center">More problems </button></a>
+   <center> <a href={% url 'moreProblems' %} >  <button type="button" class="btn btn-dark center">More problems </button></a></center>
 {% endif %}
 {% endblock %}
 

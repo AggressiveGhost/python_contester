@@ -20,7 +20,22 @@ def currentTask(request, task_id):
     taskEvery.clicks += 1
     return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
 
+
+
 def moreProblems(request):
     taskTitle = 'All Tasks'
     allTask = Task.objects.all()
     return render(request, 'myFirstApp/popTask.html', {'title':taskTitle,'task':allTask})
+
+
+def rating(request):
+    return render(request, 'myFirstApp/rayting.html')
+
+def signIn(request):
+    return render(request, 'myFirstApp/signIn.html')
+
+def signUp(request):
+    return render(request, 'myFirstApp/registr.html')
+
+def userpage(request):
+    return render(request, 'myFirstApp/userPage.html')
