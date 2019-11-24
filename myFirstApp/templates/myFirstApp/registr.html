@@ -1,84 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-     <link rel="stylesheet" href="css/main.css">
-     <link rel="stylesheet" href="css/registr.css">
+{% extends 'index.html' %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  id="bootstrap-css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-   </head>
-  <body>
-    <div class="container">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="ind.html">
-      <img src="img/logo.svg" alt="" width="70" height="70">
-      PYTH<i class="fa fa-circle"></i>N Contester
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <div class="topnav">
-                  <input type="text" placeholder="Search..">
-              </div>
-
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user" aria-hidden="true"></i>   User
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Sign In</a>
-              <a class="dropdown-item" href="#">Registr</a>
-            </div>
-          </div>
-          </li>
-        </ul>
-      </div>
-      </nav>
-  </div>
-    <br><br><br><br>
-    <div id="fr">
-
-
-  <form action="" >
-    <div class="regidtrh">
-      <h1 title="Registration">Registration </h1>
-    </div>
-    <div class="group">
-      <label for="">Name</label>
-      <input type="text">
-    </div>
-    <div class="group">
-      <label for="">Surname</label>
-      <input type="text">
-    </div>
-    <div class="group">
-      <label for="">E-mail</label>
-      <input type="text">
-    </div>
-    <div class="group">
-      <label for="">Login</label>
-      <input type="text">
-    </div>
-    <div class="group">
-      <label for="">Password</label>
-      <input type="password">
-    </div>
-    <div class="group">
-      <center>  <a href="registr.html" class="btn btn-info" role="button">Registration</a>
-    </div>
-    </form>
-        </div>
-
-  </body>
-</html>
+{% block sig %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}

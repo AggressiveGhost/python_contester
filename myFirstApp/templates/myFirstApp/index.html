@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title></title>
     {% load static %}
-     <link rel="stylesheet" href="css/main.css">
+     <link rel="stylesheet" href="static/main.css">
 
+ <link rel="stylesheet" href="static/registr.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  id="bootstrap-css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -41,8 +42,13 @@
             <i class="fa fa-user" aria-hidden="true"></i>   User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={% url 'signIn' %}>Sign In</a>
-          <a class="dropdown-item" href={% url 'signUp' %}>Registr</a>
+        {% if user.is_authenticated %}
+          <a class="dropdown-item" href={% url 'userpage' %}>{{ user.username }}</a>
+          <a class="dropdown-item" href={% url 'userpage' %}> Logout </a>
+        {% else %}
+          <a class="dropdown-item" href={% url 'user_login' %}>Sign In</a>
+          <a class="dropdown-item" href={% url 'register' %}>Registr</a>
+        {% endif %}
         </div>
       </li>
 
@@ -50,11 +56,13 @@
 
 </div>
 </nav>
+{% block body_block %}
+{% endblock %}
 
-<br><br>
-<br>
-<br>
-<br>
+
+{% block sig %}
+{% endblock  %}
+
 
 {% block showEveryTask %}
 {% endblock %}    
@@ -67,7 +75,8 @@
 
 {% comment %} word {% endcomment %}
 <div class="container w">
-  <div class="row justify-content-md-center">
+  <div class="row centred">
+
 
     {% block word %}
     {% endblock  %}

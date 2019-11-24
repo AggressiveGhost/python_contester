@@ -126,6 +126,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT =  BASE_DIR + r'/myFirstApp/media'
 MEDIA_URL = '/media/'
+LOGIN_URL = '/myFirstApp/user_login/'
 
 
 #hjk

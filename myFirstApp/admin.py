@@ -4,3 +4,9 @@ from .models import *
 
 admin.site.register(Task)
 admin.site.register(Code)
+admin.site.register(UserProfileInfo)
+# 
+# 
+# 
+# 
+# 
