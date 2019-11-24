@@ -55,7 +55,7 @@ def special(request):
 # @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return reverse_lazy('index')
 
 
 
