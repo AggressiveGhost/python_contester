@@ -35,14 +35,12 @@
 <br> <br><br >
 <div class="container">
 
-<form>
-
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Input your code here</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
-    <button>Send Code</button>
-  </div>
-</form>
+<form class="" action="" method="post">
+    {% csrf_token %}
+    <textarea name="code_text" rows="8" cols="80" placeholder="Input your code here "></textarea>
+    <input type="hidden" name="username" value="{{user.username}}">
+    <br><input type="submit" name="" value="Submit">
+  </form>
 </div>
 {% endif %}
 {% endblock  %}

@@ -7,8 +7,11 @@ from python_contester import settings
 
 urlpatterns = [
     path('', views.index, name = 'mainPage'),
+    path('index/', views.index, name = 'mainPage'),
     path('currentTask/<int:task_id>/', views.currentTask, name='currentTask'),#every task
     path('moreProblems/', views.moreProblems, name = 'moreProblems'),
+    #path('article/<int:article_id>/comment', views.addComment, name='addComment'),
+    path('currentTask/<int:task_id>/code', views.addCode, name = 'addCode'),
 
 
     path('rating/', views.rating ,name ='rating' ),

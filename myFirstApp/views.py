@@ -49,13 +49,13 @@ def userpage(request):
 
 
 # @login_required   
-def special(request):
-    return HttpResponse("You are logged in !")
+
 
 # @login_required
 def user_logout(request):
     logout(request)
-    return reverse_lazy('index')
+    return redirect(reverse('index'), kwargs={})
+    
 
 
 
@@ -96,7 +96,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return HttpResponse('hello wworld')
+                return redirect(reverse('index'), kwargs={})
             else:
                 return HttpResponse("Your account was inactive.")
         else:
@@ -105,3 +105,23 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'myFirstApp/login.html', {})
+
+# task        = models.ForeignKey(Task, on_delete = models.CASCADE)
+#     user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     task_code   = models.TextField(default="")
+#     isSolved    = models.BooleanField(default=False)
+#rticle.objects.get(pk=article_id))
+
+
+
+def addCode(request,task_id):
+    pass
+    try:
+        code = request.POST.get("code_text")
+        code = Code(task_code = code, task = Task.objects.get(pk = task_id))
+        code.save()
+        return HttpResponse('meow')
+        # return render(request, 'myFirstApp/popTask.html')
+    except:
+        return HttpResponse('wtf')
+
