@@ -14,8 +14,6 @@ urlpatterns = [
 
 
     path('rating/', views.rating ,name ='rating' ),
-    path('signIn/',views.signIn ,name = 'signIn'),
-    path('signUp/', views.signUp ,name = 'signUp'),
     path('userpage/', views.userpage ,name = 'userpage'),
     
 

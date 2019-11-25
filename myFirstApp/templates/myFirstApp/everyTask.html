@@ -1,6 +1,8 @@
 {% extends 'index.html' %}
 
-{% block showEveryTask %}
+{% load static %}
+
+{% block content %}
 {% if  everyTask %}
 <div class="container">
   <div class="row centered">
@@ -29,12 +31,14 @@
 <br> <br><br >
 <div class="container">
 
-<form class="" action="" method="post">
+<form class="" action="{% url 'addCode' everyTask.id %}" method="post">
     {% csrf_token %}
     <textarea name="code_text" rows="8" cols="80" placeholder="Input your code here "></textarea>
     <input type="hidden" name="username" value="{{user.username}}">
     <br><input type="submit" name="" value="Submit">
   </form>
+  {{user}}
+
 </div>
 {% endif %}
-{% endblock  %
+{% endblock  %}

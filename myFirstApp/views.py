@@ -109,11 +109,13 @@ def user_login(request):
 
 
 def addCode(request,task_id):
-    pass
+    print(request.POST)
     try:
         code = request.POST.get("code_text")
-        code = Code(task_code = code, task = Task.objects.get(pk = task_id))
-        code.save()
+        print(code,request.POST.get('username'))
+        co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id))
+        print(co)
+        co.save()
         return HttpResponse('Success')
     except:
         return HttpResponse('unSuccess')
