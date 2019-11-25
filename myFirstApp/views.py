@@ -5,6 +5,7 @@ from django.shortcuts import *
 from django import *
 from .models import *
 from .forms import *
+from django.contrib.auth.views import *
 
 # Create your views here.
 
@@ -15,7 +16,6 @@ def index(request): # shows 4 last popular tasks by number of clics
     for i in allTasks:
         count += 1
     popular = Task.objects.filter(clicks__gt = 3).order_by('-clicks')[:3]
-    # return render(request, 'myFirstApp/index.html')
     return render(request, 'myFirstApp/popTask.html', context={'title':taskTitle,'task':popular, 'countTask':count})
 
 
@@ -48,13 +48,12 @@ def userpage(request):
 
 
 
-# @login_required   
 
 
 # @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('index'), kwargs={})
+    return HttpResponseRedirect(reverse('index'))
     
 
 
@@ -96,7 +95,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return redirect(reverse('index'), kwargs={})
+                return HttpResponseRedirect(reverse_lazy('index'))
             else:
                 return HttpResponse("Your account was inactive.")
         else:
@@ -106,11 +105,6 @@ def user_login(request):
     else:
         return render(request, 'myFirstApp/login.html', {})
 
-# task        = models.ForeignKey(Task, on_delete = models.CASCADE)
-#     user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     task_code   = models.TextField(default="")
-#     isSolved    = models.BooleanField(default=False)
-#rticle.objects.get(pk=article_id))
 
 
 
@@ -120,8 +114,7 @@ def addCode(request,task_id):
         code = request.POST.get("code_text")
         code = Code(task_code = code, task = Task.objects.get(pk = task_id))
         code.save()
-        return HttpResponse('meow')
-        # return render(request, 'myFirstApp/popTask.html')
+        return HttpResponse('Success')
     except:
-        return HttpResponse('wtf')
+        return HttpResponse('unSuccess')
 
