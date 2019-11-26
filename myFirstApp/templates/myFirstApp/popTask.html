@@ -37,7 +37,7 @@
 
 <form class="" action="{% url 'addCode' everyTask.id %}" method="post">
     {% csrf_token %}
-    <textarea name="code_text" rows="8" cols="80" placeholder="Input your code here "></textarea>
+    <textarea name="code_text" rows="8" cols="80" placeholder="Input your code here " onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
     <input type="hidden" name="username" value="{{user.username}}">
     <br><input type="submit" name="" value="Submit">
   </form>

@@ -27,6 +27,11 @@ class Code(models.Model):
     user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     task_code   = models.TextField(default="")
     isSolved    = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.user.username)
+    
+    
  
 
 
