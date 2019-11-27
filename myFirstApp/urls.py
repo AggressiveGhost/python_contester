@@ -11,7 +11,7 @@ urlpatterns = [
     path('currentTask/<int:task_id>/', views.currentTask, name='currentTask'),#every task
     path('moreProblems/', views.moreProblems, name = 'moreProblems'),
     path('currentTask/<int:task_id>/code', views.addCode, name = 'addCode'),
-
+    path('forum', views.forum, name = 'forum'),
 
     path('rating/', views.rating ,name ='rating' ),
     path('userpage/', views.userpage ,name = 'userpage'),

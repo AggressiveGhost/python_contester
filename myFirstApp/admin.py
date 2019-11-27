@@ -5,6 +5,8 @@ from .models import *
 admin.site.register(Task)
 admin.site.register(Code)
 admin.site.register(UserProfileInfo)
+admin.site.register(Question)
+admin.site.register(Answer)
 # 
 # 
 # 

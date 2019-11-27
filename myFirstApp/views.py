@@ -19,10 +19,14 @@ def index(request): # shows 4 last popular tasks by number of clics
     return render(request, 'myFirstApp/popTask.html', context={'title':taskTitle,'task':popular, 'countTask':count})
 
 
+def forum(requrest):
+    return render(requrest, 'myFirstApp/forum.html')
+
+
 def currentTask(request, task_id):
     taskEvery = Task.objects.get(id = task_id)
     taskEvery.clicks += 1
-    return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
+    return render(request, 'myFirstApp/everyTask.html', {'everyTask':taskEvery})#expection change key
 
 
 
@@ -113,10 +117,15 @@ def addCode(request,task_id):
     try:
         code = request.POST.get("code_text")
         print(code,request.POST.get('username'))
+
         co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id))
         print(co)
         co.save()
-        return HttpResponse('Success')
+        #everyTask
+        taskEvery = Task.objects.get(pk=task_id)
+        # return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
+        # return HttpResponseRedirect(reverse_lazy('currentTask/{}/'.format(taskEvery.id)))
+        return currentTask(request, task_id)
     except:
         return HttpResponse('unSuccess')
 

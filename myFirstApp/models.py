@@ -42,3 +42,28 @@ class UserProfileInfo(models.Model):
 
 def __str__(self):
   return self.user.username
+
+
+class Question(models.Model):
+    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title       = models.TextField(default="")
+    text        = models.TextField(default="")
+    img         = models.ImageField(upload_to='Q_img/', default='NULL')
+    isSolved    = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.title)
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text        = models.TextField(default="")
+    author      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.author.username)
+    
+
+    
+
+
+    

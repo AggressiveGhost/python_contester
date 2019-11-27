@@ -16,7 +16,7 @@
   <body>
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-<a class="navbar-brand" href="ind.html">
+<a class="navbar-brand" href={% url 'index' %}>
   <img src="static/logo.png" alt="" width="50" height="50">
     PYTH<i class="fa fa-circle"></i>N Contester
   </a>
@@ -30,6 +30,9 @@
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 <ul class="navbar-nav mt-2 mt-lg-0">
+  <li class="nav-item">
+    <a class="nav-link" href={% url 'forum' %}>Forum</a>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href={% url 'userpage' %}>About Me</a>
   </li>
@@ -64,55 +67,47 @@
 {% endblock %}
 
 
-{% block sig %}
-{% endblock  %}
 
-
-{% block showEveryTask %}
-{% endblock %}    
-
-
-
-{% comment %} background {% endcomment %}
-{% block background %}
-{% endblock  %}
-
-{% comment %} word {% endcomment %}
-<div class="container w">
-  <div class="row centred">
-
-
-    {% block word %}
-    {% endblock  %}
-    
-    <br><br>
-  </div>
-</div>
-
-
-{% comment %} NEWS {% endcomment %}
-{% block news %}
-{% endblock  %}
-
-
-
-{% comment %} Popular Tasks {% endcomment %}
-  <div id="lg"> 
-    {% block pop %}
-    {% endblock %}
-    <br><br>
-  </div>
-
-{% comment %} Statistics {% endcomment %}
-  <div id="r">
-    {% block statistic %}
-    {% endblock  %}
-  </div>
 
   {% comment %} SocialNetworks {% endcomment %}
   <div id="f">
-    {% block socialNetwork %}
-    {% endblock  %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+        <div class="col-md-12 py-5">
+          <div class="mb-5 flex-center">
+              <div class="row justify-content-md-center">
+
+            <!-- Facebook -->
+            <a class="fb-ic" href="#">
+              <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!-- Twitter -->
+            <a class="tw-ic"href="#">
+              <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!-- Google +-->
+            <a class="gplus-ic"href="#">
+              <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Linkedin -->
+            <a class="li-ic"href="#">
+              <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Instagram-->
+            <a class="ins-ic"href="#">
+              <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Pinterest-->
+            <a class="pin-ic"href="#">
+              <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
+            </a>
+          </div>
+        </div>
+      </div>      <!-- <i class="fa fa-address-book" aria-hidden="true"></i> -->
+
+        </div>
+
+      </div>
   </div>
 
 
