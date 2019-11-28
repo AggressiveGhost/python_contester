@@ -35,17 +35,17 @@ def forum(requrest):
 
 
 def currentTask(request, task_id):
+    dic = dict()
     currentTask = Task.objects.get(id = task_id)
+    dic['currentTask'] = currentTask
+
     # ---> Increase number of clics
     currentTask.clicks += 1
     # ---> Codes of current User
-    code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
-    
-    dic = {
-        'currentTask' : currentTask,
-        'code' : code
-    }
-    
+    if request.user.id != None:
+        code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
+        dic['code'] = code
+   
     return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
 
 
@@ -53,7 +53,7 @@ def currentTask(request, task_id):
 def moreProblems(request):
     taskTitle = 'All Tasks'
     allTask = Task.objects.all()
-    return render(request, 'myFirstApp/popTask.html', {'title':taskTitle,'task':allTask})
+    return render(request, 'myFirstApp/allTask.html', {'title':taskTitle,'task':allTask})
 
 
 def rating(request):
@@ -62,14 +62,17 @@ def rating(request):
         n = Count(c.score)
         return n
 
-    users = UserProfileInfo.objects.all()
+    users = User.objects.all()
     code = Code.objects.filter(score__gt = 1)
-    # print(code, "------")    
+    print(users , "+++++++++")
 
     for user in users:
+        print(user, "*******")
         code = Code.objects.filter(score__gt = 1, user = user)
         
-        print(code)
+        print("------------",code)
+        print()
+        print()
 
     return render(request, 'myFirstApp/rayting.html')
 

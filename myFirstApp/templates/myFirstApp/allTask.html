@@ -1,0 +1,31 @@
+{% extends 'myFirstApp/index.html' %}
+
+{% block body_block %}
+<br><br><br><br><br><br>
+<div id="lg"> 
+<br><br>
+   <center> <h4>{{ title }}</h4></center>
+    <br>
+    
+    <div class="container">
+        <div class="row justify-content-md-center">
+
+        <br><br>
+
+    {% for i in task %}
+        <div class="tilt2">
+            <div class="col-lg-10 col-lg-offset-4">
+                <a href={%url 'currentTask' i.id%}><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
+                <p>{{ i.task_name }} </p>
+            </div>
+        </div> 
+    {% endfor %}
+
+       
+        </div>
+    </div>
+    <br><br><br>
+   <center> <a href={% url 'index' %} >  <button type="button" class="btn btn-dark center">Exit</button></a></center>
+    <br><br>
+  </div>
+  {% endblock  %}

@@ -27,7 +27,8 @@
  </div>
 <br> <br><br >
 
-
+{% comment %} IF USER REGISTERED {% endcomment %}
+{% if user.id != None %}
 <div class="container">
 <form class="" action="{% url 'addCode' dic.currentTask.id %}" method="post">
     {% csrf_token %}
@@ -37,7 +38,7 @@
   </form>  
 </div>
 
-<div>
+{% comment %} <div>
 {% for i in dic.code %}
 <ul>{{i.date}}</ul>
 <ul>Python 3.7</ul>
@@ -49,6 +50,36 @@
 <p>{{i.task_code}}</p>
 <br>
 {% endfor %}
-</div>
+</div>  {% endcomment %}
 
+<div class="container">
+{% for i in dic.code %}
+<ul>{{i.date}}</ul>
+<ul>Python 3.7</ul>
+<ul>{{i.score}}</ul>
+{% if i.isSolved == False %} <ul>NO</ul>
+{% else %} <ul>YES</ul>
+{% endif %}
+<p>
+  <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#{{ i.id }}" aria-expanded="false" aria-controls="collapseExample">
+    MY CODE
+  </button>
+</p>
+<div class="collapse" id={{ i.id }}>
+	
+  	<div class="card card-body">
+    	<p>
+		{{i.task_code}}
+		</p>
+	</div>
+</div>
+  <br><br>
+{% endfor %}
+</div> 
+
+
+
+{% else %}
+  <center><a class="dropdown-item" href={% url 'register' %}>Please sign Up to solve tasks</a></center>
+{% endif %}
 {% endblock  %}
