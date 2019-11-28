@@ -6,17 +6,28 @@ from django import *
 from .models import *
 from .forms import *
 from django.contrib.auth.views import *
+from random import *
+from django.db.models import Count
 
 # Create your views here.
 
-def index(request): # shows 4 last popular tasks by number of clics
-    taskTitle = 'Polular Tasks'
-    allTasks = Task.objects.all()
-    count = int(0)
-    for i in allTasks:
-        count += 1
+def index(request): 
+    # ---> Quantity of Tasks
+    tasks = Task.objects.all().count() 
+    # ---> Quantity of Users
+    users = UserProfileInfo.objects.all().count() 
+    # ---> Quantity of Solved Tasks
+    solved = Code.objects.filter(isSolved = False).count() 
+     # ---> Last 3 popular Tasks
     popular = Task.objects.filter(clicks__gt = 3).order_by('-clicks')[:3]
-    return render(request, 'myFirstApp/popTask.html', context={'title':taskTitle,'task':popular, 'countTask':count})
+
+    dic = {
+        'countTask':tasks,
+        'countUser':users,
+        'countSolved':solved
+    }
+
+    return render(request, 'myFirstApp/popTask.html', context={'title':'Polular Tasks','task':popular, 'dic':dic})
 
 
 def forum(requrest):
@@ -24,9 +35,18 @@ def forum(requrest):
 
 
 def currentTask(request, task_id):
-    taskEvery = Task.objects.get(id = task_id)
-    taskEvery.clicks += 1
-    return render(request, 'myFirstApp/everyTask.html', {'everyTask':taskEvery})#expection change key
+    currentTask = Task.objects.get(id = task_id)
+    # ---> Increase number of clics
+    currentTask.clicks += 1
+    # ---> Codes of current User
+    code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
+    
+    dic = {
+        'currentTask' : currentTask,
+        'code' : code
+    }
+    
+    return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
 
 
 
@@ -37,6 +57,20 @@ def moreProblems(request):
 
 
 def rating(request):
+
+    def getScore(c:Code):
+        n = Count(c.score)
+        return n
+
+    users = UserProfileInfo.objects.all()
+    code = Code.objects.filter(score__gt = 1)
+    # print(code, "------")    
+
+    for user in users:
+        code = Code.objects.filter(score__gt = 1, user = user)
+        
+        print(code)
+
     return render(request, 'myFirstApp/rayting.html')
 
 def signIn(request):
@@ -47,7 +81,9 @@ def signUp(request):
     return render(request, 'myFirstApp/signUp.html')
 
 def userpage(request):
-    return render(request, 'myFirstApp/userPage.html')
+    print(request.user)
+    user = request.user
+    return render(request, 'myFirstApp/userPage.html', {'user':user})
 
 
 
@@ -72,6 +108,7 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
+            login(request,user)
             profile = profile_form.save(commit=False)
             profile.user = user
             if 'avatar' in request.FILES:
@@ -79,6 +116,8 @@ def register(request):
                 profile.profile_pic = request.FILES['avatar']
             profile.save()
             registered = True
+            # ---> reverces to the main page
+            return HttpResponseRedirect(reverse_lazy('index'))
         else:
             print(user_form.errors,profile_form.errors)
     else:
@@ -118,14 +157,19 @@ def addCode(request,task_id):
         code = request.POST.get("code_text")
         print(code,request.POST.get('username'))
 
-        co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id))
+        score = int(0)
+        score = randint(60, 100)
+        print(score)
+
+        co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id), score = score)
         print(co)
         co.save()
         #everyTask
         taskEvery = Task.objects.get(pk=task_id)
         # return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
         # return HttpResponseRedirect(reverse_lazy('currentTask/{}/'.format(taskEvery.id)))
-        return currentTask(request, task_id)
+        return currentTask(request, task_id) #баг
+        # return HttpResponseRedirect(reverse_lazy('currentTask', args=(task_id)))
     except:
         return HttpResponse('unSuccess')
 

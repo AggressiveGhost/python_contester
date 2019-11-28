@@ -3,7 +3,6 @@
 
 
 {% block body_block %}
-{% if  everyTask %}
 <br><br><br><br><br>
 <div class="container">
   <div class="row centered">
@@ -12,13 +11,13 @@
     <table class="table table-striped table-dark"width="90%">
       <thead>
         <tr>
-          <th scope="col">{{ everyTask.task_name }}</th>
+          <th scope="col">{{ dic.currentTask.task_name }}</th>
 
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row" height="200"><p> {{ everyTask.task_text }} </p></th>
+          <th scope="row" height="200"><p> {{ dic.currentTask.task_text }} </p></th>
 
         </tr>
 
@@ -30,16 +29,26 @@
 
 
 <div class="container">
-
-<form class="" action="{% url 'addCode' everyTask.id %}" method="post">
+<form class="" action="{% url 'addCode' dic.currentTask.id %}" method="post">
     {% csrf_token %}
     <textarea name="code_text" rows="8" cols="80" placeholder="Input your code here " onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
     <input type="hidden" name="username" value="{{user.username}}">
-    <br><input type="submit" name="" value="Submit">
-  </form>
-  {{user}}
-  {{ everyTask }}
-
+    <br><input type="submit" name="" value="Send Code">
+  </form>  
 </div>
+
+<div>
+{% for i in dic.code %}
+<ul>{{i.date}}</ul>
+<ul>Python 3.7</ul>
+<ul>{{i.score}}</ul>
+{% if i.isSolved == False %} <ul>NO</ul>
+{% else %} <ul>YES</ul>
 {% endif %}
+<button>Code</button>
+<p>{{i.task_code}}</p>
+<br>
+{% endfor %}
+</div>
+
 {% endblock  %}

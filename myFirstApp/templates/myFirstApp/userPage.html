@@ -4,21 +4,22 @@
 
 
 {% block body_block %}
+<br><br><br><br>
 
      <div class="container">
    <div class="row">
 
 <div class="col-sm-4">
         <div class="card" style="width: 18rem;">
-          <img src="user.png" class="card-img-top" alt="...">
+          <img src="media/profile_pics/user.png" class="card-img-top" alt="...">
+          
           <div class="card-body">
-            <h5 class="card-title">Aneketa</h5>
+            <h5 class="card-title">My Profile</h5>
 
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><font size="4" color="black" face="Arial">Diana</font>  </li>
-            <li class="list-group-item"><font size="4" color="black" face="Arial">Khalidullayeva</font>  </li>
-            <li class="list-group-item"><font size="4" color="black" face="Arial">kh.diana@gmail.com</font>  </li>
+            <li class="list-group-item"><font size="4" color="black" face="Arial">{{ user }}</font>  </li>
+            <li class="list-group-item"><font size="4" color="black" face="Arial"> 26371@iitu.com </font>  </li>
           </ul>
           <div class="card-body">
             <a href="#" class="card-link">Card link</a>
@@ -30,8 +31,6 @@
         <div class="card" style="width: 40rem;">
   <ul class="list-group list-group-flush">
     <li class="list-group-item"> Count of solved tasks : <h7>10</h7></li>
-    <li class="list-group-item"> <p><a href="#top">My solved tasks</a></p></li>
-    <li class="list-group-item"><a href="task.html"> Tasks </a></li>
     <li class="list-group-item"><a href="rayting.html"> My Rating</a></li>
   </ul>
 </div>
