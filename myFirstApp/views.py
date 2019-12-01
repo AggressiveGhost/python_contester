@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 
 # Create your views here.
+rat = dict()
 
 def index(request): 
     # ---> Quantity of Tasks
@@ -54,14 +55,14 @@ def currentTask(request, task_id):
 def moreProblems(request):
     taskTitle = 'All Tasks'
     allTask = Task.objects.all()
-    paginator=Paginator(allTask,3) #вот изменения мына саган
-    page = request.GET.get('page') #вот изменения мына саган
-    allTask=paginator.get_page(page) #вот изменения мына саган
+    paginator=Paginator(allTask,3) 
+    page = request.GET.get('page')
+    allTask=paginator.get_page(page)
     return render(request, 'myFirstApp/allTask.html', {'title':taskTitle,'task':allTask})
 
 
 def rating(request):
-    dic = dict()
+    diсScore = dict()
     # ---> Sum of scores
     def getScore(code:Code):
         score = int()
@@ -76,10 +77,13 @@ def rating(request):
             count = code.count()
             score = getScore(code)
             # ---> key(User) = values(score, count)
-            dic[user] = [score, count]
+            diсScore["{}".format(user.username)] = [score, count]
     # ---> sort dictionary by scores
-    dic = sorted(dic.items(),key = lambda x : x[0] )
-    return render(request, 'myFirstApp/rayting.html', {'dict':dic})
+    diсScore = sorted(diсScore.items(),key = lambda x : x[0] )
+    global rat
+    rat = diсScore
+    print(rat)
+    return render(request, 'myFirstApp/rayting.html', {'dicScore':diсScore})
 
 def signIn(request):
     return render(request, 'myFirstApp/signIn.html')

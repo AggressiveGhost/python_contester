@@ -18,24 +18,26 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>First Name</th>
+      <th>Name</th>
       <th>Score</th>
+      <th>Solved Tasks</th>
     </tr>
   </thead>
+
   <tbody>
+  {% for k, v in dicScore %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>854l22</td>
+      <th scope="row">{{forloop.counter }}</th>
+      <td>{{ k }}</td>
+      <td>{{v.0}}</td>
+      <td>{{v.1}}</td>
     </tr>
+  {% endfor %}
   </tbody>
 </table>
 </div>
 </div>
 
-{{dict}}
-
-<br> <br><br >
 
 
 {% endblock body_block %}
