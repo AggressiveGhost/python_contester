@@ -57,24 +57,25 @@ def moreProblems(request):
 
 
 def rating(request):
-
-    def getScore(c:Code):
-        n = Count(c.score)
-        return n
-
+    dic = dict()
+    # ---> Sum of scores
+    def getScore(code:Code):
+        score = int()
+        for i in code:
+            score += int(i.score)
+        return score
+    # ---> get all users
     users = User.objects.all()
-    code = Code.objects.filter(score__gt = 1)
-    print(users , "+++++++++")
-
     for user in users:
-        print(user, "*******")
         code = Code.objects.filter(score__gt = 1, user = user)
-        
-        print("------------",code)
-        print()
-        print()
-
-    return render(request, 'myFirstApp/rayting.html')
+        if code: # ---> if user's score exists
+            count = code.count()
+            score = getScore(code)
+            # ---> key(User) = values(score, count)
+            dic[user] = [score, count]
+    # ---> sort dictionary by scores
+    dic = sorted(dic.items(),key = lambda x : x[0] )
+    return render(request, 'myFirstApp/rayting.html', {'dict':dic})
 
 def signIn(request):
     return render(request, 'myFirstApp/signIn.html')
@@ -85,8 +86,31 @@ def signUp(request):
 
 def userpage(request):
     print(request.user)
-    user = request.user
-    return render(request, 'myFirstApp/userPage.html', {'user':user})
+    user        = request.user
+    # ---> set of codes
+    codes       = Code.objects.filter(user = user).order_by('-date')
+    # ---> set of answers
+    answers     = Answer.objects.filter(author = user).order_by('-likes')
+    # ---> set of questions
+    questions   = Question.objects.filter(user = user).order_by('-clicks')
+
+    codeCount   = codes.filter(isSolved = False).count()
+    # answerCount = answers.filter(isHelped = False).count()
+    answerCount = answers.count()
+    # questionCount = questions.filter(clicks__gt = 3).count()
+    questionCount = questions.count()
+
+    dic = {
+        'codeCount':codeCount,
+        'answerCount':answerCount,
+        'questionCount':questionCount,
+
+        'codes':codes,
+        'answers':answers,
+        'questions':questions
+    }
+
+    return render(request, 'myFirstApp/userPage.html', {'dic':dic})
 
 
 
@@ -163,7 +187,7 @@ def addCode(request,task_id):
         score = int(0)
         score = randint(60, 100)
         print(score)
-
+        
         co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id), score = score)
         print(co)
         co.save()

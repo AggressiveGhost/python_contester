@@ -3,7 +3,7 @@ from django.urls import *
 from django.contrib.auth.models import *
 from django.conf import settings
 from datetime import datetime    
-
+import os
 # ---> User Model
 class UserProfileInfo(models.Model):
     user        = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -37,7 +37,7 @@ class Code(models.Model):
     isSolved    = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username + "___" + self.date.strftime("%H:%M:%S")
+        return self.task.task_name + " " + self.user.username + " " + self.date.strftime("%H:%M:%S")
 
 
 
@@ -49,6 +49,7 @@ class Question(models.Model):
     img         = models.ImageField(upload_to='Q_img/', default='NULL')
     date        = models.DateTimeField(default=datetime.now, blank=True)
     isSolved    = models.BooleanField(default=False)
+    clicks      = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.title)
@@ -61,7 +62,8 @@ class Answer(models.Model):
     text        = models.TextField(default="")
     date        = models.DateTimeField(default=datetime.now, blank=True)
     author      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    
+    isHelped    = models.BooleanField(False) # <--- Can change only author of Question
+    likes       = models.IntegerField(default=0)
     def __str__(self):
         return str(self.author.username)
     
