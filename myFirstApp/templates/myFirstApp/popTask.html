@@ -5,7 +5,7 @@
 
 
 {% comment %} background {% endcomment %}
-<div id = "headerwrap">
+<div id="headerwrap" xmlns="http://www.w3.org/1999/html">
     <div class="container">
       <div class="row justify-content-md-center">
       <div class="col-lg-8 col-lg-offset-2">
@@ -125,20 +125,25 @@
   </div>
 
 {% comment %} Statistics {% endcomment %}
-  <div id="r">
+
+      <div id ="r">
+
     <div class="container">
       <div class="row justify-content-md-center">
+
         <div class="col-lg-8 col-lg-offset-2">
-          <h4>Razrabotka</h4>
-          <p>I know this is not simple task, but it is no reason to GIVE UP</p>
-          <p>{{ dic.countTask }} Tasks</p> 
-          <p>{{dic.countSolved}} Times solved</p>
-          <p> by {{ dic.countUser}} Users </p>
-          
+          <h4>Statistics</h4>
+            <p> <font size="7" face="Wide latin"> {{ dic.countTask }}</font>
+            <font size="5" face="Wide latin">Tasks</font></p>
+            <p> <font size="7" face="Wide latin">{{dic.countSolved}}</font>
+            <font size="5" face="Wide latin">Times solved</font></p>
+            <p><font size="5" face="Wide latin"> by </font> <font size="7" face="Wide latin">{{ dic.countUser}} </font><font size="5" face="Wide latin">Users</font> </p>
+          </div>
     </div>
       </div>
+
     </div>
-  </div>
+
 
 
 {% endblock  %}

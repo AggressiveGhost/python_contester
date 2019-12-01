@@ -8,6 +8,7 @@ from .forms import *
 from django.contrib.auth.views import *
 from random import *
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -53,6 +54,9 @@ def currentTask(request, task_id):
 def moreProblems(request):
     taskTitle = 'All Tasks'
     allTask = Task.objects.all()
+    paginator=Paginator(allTask,3) #вот изменения мына саган
+    page = request.GET.get('page') #вот изменения мына саган
+    allTask=paginator.get_page(page) #вот изменения мына саган
     return render(request, 'myFirstApp/allTask.html', {'title':taskTitle,'task':allTask})
 
 

@@ -61,8 +61,9 @@
 #lg h5{
   font-size: 35px;
 }
-#r{
-  background: #ff7878;
+
+#d{
+  background: linear-gradient(to top left, powderblue, pink);
   padding-top: 70px;
   padding-bottom: 70px;
 }
@@ -73,12 +74,12 @@
   -ms-transform: rotate(5deg);
   transform: rotate(5deg);
 }
-#r h4{
+#d h4{
   color:white;
   font-size: 45px;
 
 }
-#r p{
+#d p{
   color: white;
 }
 #f{
@@ -94,3 +95,4 @@
 #f i:hover{
   color:#ff7878;
 }
+

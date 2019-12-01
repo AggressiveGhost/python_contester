@@ -4,65 +4,76 @@
 
 
 {% block body_block %}
+
 <br><br><br><br>
-
-     <div class="container">
+<div class="container">
    <div class="row">
-
-<div class="col-sm-4">
-        <div class="card" style="width: 18rem;">
-          <img src="media/profile_pics/user.png" class="card-img-top" alt="...">
-          
+     <div class="col-sm-4">
+       <div class="card" style="width: 18rem;">
+         <img src="media/profile_pics/user.png" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">My Profile</h5>
-
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><font size="4" color="black" face="Arial">{{ user }}</font>  </li>
-            <li class="list-group-item"><font size="4" color="black" face="Arial"> 26371@iitu.com </font>  </li>
-          </ul>
-          
-        </div>
-      </div>
-      <div class="col-sm-2">
-        <div class="card" style="width: 40rem;">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"> Solved tasks : <h7>{{ dic.codeCount }}</h7></li>
-    <li class="list-group-item"> Helpful comments : <h7>{{ dic.answerCount }}</h7></li>
-    <li class="list-group-item"> Asked Questions : <h7>{{ dic.questionCount }}</h7></li>
-    <li class="list-group-item"><a href="rayting.html"> My Rating</a></li>
-  </ul>
-</div>
+         <ul class="list-group list-group-flush">
+           <li class="list-group-item"><font size="4" color="black" face="Arial">{{ user }}</font>  </li>
+           <li class="list-group-item"><font size="4" color="black" face="Arial"> 26371@iitu.com </font>  </li>
+         </ul>
+         <div class="card-body">
+           <a href="#" class="card-link">Card link</a>
+           <a href="#" class="card-link">Another link</a>
+         </div>
+       </div>
+     </div>
+     <div class="col-sm-2">
+       <div class="card" style="width: 40rem;">
+         <ul class="list-group list-group-flush">
+           <li class="list-group-item"> Count of solved tasks : <h7>10</h7></li>
+           <li class="list-group-item"><a href="rayting.html"> My Rating</a></li>
+         </ul>
+       </div>
+     </div>
+   </div>
 </div>
 
-        </div>
-     </div>
-     <br><br>
+<br><br>
+
+<div class = container>
+  <h4>  My progress </h4>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+  </div>
+  <br><br>
+</div>
+
 <div class="container">
   <p><a name="top"></a>
-    Last tasks
-    <br>
-    <table class="table table-hover">
-  <thead>
+  <h4>List of my tasks</h4>
+  <br>
+  <table class="table table-hover">
+    <thead>
     <tr>
-      <th scope="col">№</th>
-      <th scope="col">Title</th>
-      <th scope="col">Date</th>
+      <th scope="col">#</th>
+      <th scope="col">Kind of task</th>
+      <th scope="col">Description</th>
       <th scope="col">Score</th>
     </tr>
   </thead>
-  <tbody>
-  {% for code in dic.codes %}
+    <tbody>
     <tr>
-      <td>{{ forloop.counter }}</td>
-      <td> <a href = {% url 'currentTask' code.task.id %}>{{ code.task.task_name}}</a> </td>
-      <td> {{ code.date}} </td>
-      <td>{{ code.score }}</td>
+      <th scope="row">1</th>
+      <td>Task 2 </td>
+      <td> Module divide 3 and 2</td>
+      <td>852</td>
     </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    <tr>
+      <th scope="row">2</th>
+      <td>Task 3 </td>
+      <td>5 divides of natural numbers</td>
+      <td>89</td>
+    </tr>
+    </tbody>
+  </table>
   </p>
 </div>
-
+<br><br>
 {% endblock %}
