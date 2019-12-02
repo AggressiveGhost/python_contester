@@ -62,8 +62,8 @@
   font-size: 35px;
 }
 
-#d{
-  background: linear-gradient(to top left, powderblue, pink);
+#r{
+  background: linear-gradient(to top left, gray, purple,pink,gray);
   padding-top: 70px;
   padding-bottom: 70px;
 }
@@ -74,12 +74,12 @@
   -ms-transform: rotate(5deg);
   transform: rotate(5deg);
 }
-#d h4{
+#r h4{
   color:white;
   font-size: 45px;
 
 }
-#d p{
+#r p{
   color: white;
 }
 #f{

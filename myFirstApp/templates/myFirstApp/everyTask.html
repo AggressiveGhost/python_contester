@@ -26,6 +26,7 @@
 
 
 {% comment %} IF USER REGISTERED {% endcomment %}
+
 {% if user.id != None %}
 <div class="container">
     <div class ="row justify-content-md-center">
@@ -35,11 +36,12 @@
             <input type="hidden" name="username" value="{{user.username}}">
             <br>
             <div class ="row justify-content-md-center">
-                <br><br><input type="submit" name="" value="Send Code">
+            <br><br><input type="submit" name="" value="Send Code">
             </div>
         </form>
     </div>
 </div>
+
 {% comment %}
 
 <div >

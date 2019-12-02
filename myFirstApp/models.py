@@ -52,7 +52,7 @@ class Question(models.Model):
     clicks      = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.title)
+        return  self.user.username + " " + self.title 
 
 
 

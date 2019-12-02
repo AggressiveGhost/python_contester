@@ -11,15 +11,15 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 
 # Create your views here.
-rat = dict()
+rating = dict()
 
 def index(request): 
     # ---> Quantity of Tasks
-    tasks = Task.objects.all().count() 
+    tasks   = Task.objects.all().count() 
     # ---> Quantity of Users
-    users = UserProfileInfo.objects.all().count() 
+    users   = UserProfileInfo.objects.all().count() 
     # ---> Quantity of Solved Tasks
-    solved = Code.objects.filter(isSolved = False).count() 
+    solved  = Code.objects.filter(isSolved = False).count() 
      # ---> Last 3 popular Tasks
     popular = Task.objects.filter(clicks__gt = 3).order_by('-clicks')[:3]
 
@@ -28,23 +28,45 @@ def index(request):
         'countUser':users,
         'countSolved':solved
     }
-
     return render(request, 'myFirstApp/popTask.html', context={'title':'Polular Tasks','task':popular, 'dic':dic})
 
 
 def forum(requrest):
-    return render(requrest, 'myFirstApp/forum.html')
+    dic = dict()
+    questions  = Question.objects.order_by('-date')
+    for i in questions:
+        count = Answer.objects.filter(question = i).count()
+        dic[i] = [count]
+    return render(requrest, 'myFirstApp/forum.html',{'dic':dic})
+
+def ask(request):
+    return render(request, 'myFirstApp/ask.html')
+
+
+
+def addQuestion(request):
+    print(request.POST)
+    try:
+        title       = request.POST.get("title")
+        text        = request.POST.get("text")
+        user        = User.objects.get(username = request.POST.get('username'))
+        question    = Question(user = user, title = title, text = text)
+        question.save()
+        return HttpResponseRedirect(reverse_lazy('forum'))
+    except:
+        return HttpResponse('W*f whats going on!s')
+
 
 
 def currentTask(request, task_id):
-    dic = dict()
-    currentTask = Task.objects.get(id = task_id)
-    dic['currentTask'] = currentTask
+    dic                 = dict()
+    currentTask         = Task.objects.get(id = task_id)
+    dic['currentTask']  = currentTask
 
     # ---> Increase number of clics
-    currentTask.clicks += 1
+    currentTask.clicks  += 1
     # ---> Codes of current User
-    if request.user.id != None:
+    if request.user.id  != None:
         code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
         dic['code'] = code
    
@@ -53,12 +75,11 @@ def currentTask(request, task_id):
 
 
 def moreProblems(request):
-    taskTitle = 'All Tasks'
-    allTask = Task.objects.all()
-    paginator=Paginator(allTask,3) 
-    page = request.GET.get('page')
-    allTask=paginator.get_page(page)
-    return render(request, 'myFirstApp/allTask.html', {'title':taskTitle,'task':allTask})
+    allTask     = Task.objects.all()
+    paginator   = Paginator(allTask,3) 
+    page        = request.GET.get('page')
+    allTask     = paginator.get_page(page)
+    return render(request, 'myFirstApp/allTask.html', {'title':"All Tasks",'task':allTask})
 
 
 def rating(request):
@@ -80,31 +101,29 @@ def rating(request):
             diсScore["{}".format(user.username)] = [score, count]
     # ---> sort dictionary by scores
     diсScore = sorted(diсScore.items(),key = lambda x : x[0] )
-    global rat
-    rat = diсScore
-    print(rat)
+    global rating
+    rating = diсScore
     return render(request, 'myFirstApp/rayting.html', {'dicScore':diсScore})
 
 def signIn(request):
     return render(request, 'myFirstApp/signIn.html')
-
 
 def signUp(request):
     return render(request, 'myFirstApp/signUp.html')
 
 def userpage(request):
     print(request.user)
-    user        = request.user
+    user          = request.user
     # ---> set of codes
-    codes       = Code.objects.filter(user = user).order_by('-date')
+    codes         = Code.objects.filter(user = user).order_by('-date')
     # ---> set of answers
-    answers     = Answer.objects.filter(author = user).order_by('-likes')
+    answers       = Answer.objects.filter(author = user).order_by('-likes')
     # ---> set of questions
-    questions   = Question.objects.filter(user = user).order_by('-clicks')
+    questions     = Question.objects.filter(user = user).order_by('-clicks')
 
-    codeCount   = codes.filter(isSolved = False).count()
+    codeCount     = codes.filter(isSolved = False).count()
     # answerCount = answers.filter(isHelped = False).count()
-    answerCount = answers.count()
+    answerCount   = answers.count()
     # questionCount = questions.filter(clicks__gt = 3).count()
     questionCount = questions.count()
 
@@ -167,8 +186,8 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username      = request.POST.get('username')
+        password      = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
@@ -190,7 +209,7 @@ def addCode(request,task_id):
     print(request.POST)
     try:
         code = request.POST.get("code_text")
-        print(code,request.POST.get('username'))
+        print(code.request.POST.get('username'))
 
         score = int(0)
         score = randint(60, 100)
@@ -199,7 +218,6 @@ def addCode(request,task_id):
         co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id), score = score)
         print(co)
         co.save()
-        #everyTask
         taskEvery = Task.objects.get(pk=task_id)
         # return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
         # return HttpResponseRedirect(reverse_lazy('currentTask/{}/'.format(taskEvery.id)))

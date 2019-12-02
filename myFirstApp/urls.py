@@ -12,7 +12,8 @@ urlpatterns = [
     path('moreProblems', views.moreProblems, name = 'moreProblems'),
     path('currentTask <int:task_id> code', views.addCode, name = 'addCode'),
     path('forum', views.forum, name = 'forum'),
-    # path('search/<string:text>', name = 'search'),
+    path('ask', views.ask, name = 'ask'),
+    path('addQuestion', views.addQuestion, name = 'addQuestion'),
 
     path('rating', views.rating ,name ='rating' ),
     path('userpage', views.userpage ,name = 'userpage'),
