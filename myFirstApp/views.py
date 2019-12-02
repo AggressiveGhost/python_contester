@@ -9,9 +9,10 @@ from django.contrib.auth.views import *
 from random import *
 from django.db.models import Count
 from django.core.paginator import Paginator
+import itertools
+import os
 
 # Create your views here.
-rating = dict()
 
 def index(request): 
     # ---> Quantity of Tasks
@@ -24,7 +25,7 @@ def index(request):
     popular = Task.objects.filter(clicks__gt = 3).order_by('-clicks')[:3]
     # ---> Last 3 news by date
     news    = New.objects.order_by('-date')[:3]
-    
+
     dic = {
         'news':news,
         'title':'Polular Tasks',
@@ -81,10 +82,17 @@ def currentTask(request, task_id):
 
 def moreProblems(request):
     allTask     = Task.objects.all()
+    title = 'all Tasks'
+    search_query = request.GET.get('search', '')
+    if search_query:
+        allTask = Task.objects.filter(task_name__icontains=search_query)
+        title = 'Search result'
+    else:
+        allTask = Task.objects.all()
     paginator   = Paginator(allTask,3) 
     page        = request.GET.get('page')
     allTask     = paginator.get_page(page)
-    return render(request, 'myFirstApp/allTask.html', {'title':"All Tasks",'task':allTask})
+    return render(request, 'myFirstApp/allTask.html', {'title':title,'task':allTask})
 
 
 def rating(request):
@@ -105,9 +113,7 @@ def rating(request):
             # ---> key(User) = values(score, count)
             diсScore["{}".format(user.username)] = [score, count]
     # ---> sort dictionary by scores
-    diсScore = sorted(diсScore.items(),key = lambda x : x[0] )
-    global rating
-    rating = diсScore
+    diсScore = sorted(diсScore.items(),key = lambda x : x[0])
     return render(request, 'myFirstApp/rayting.html', {'dicScore':diсScore})
 
 def signIn(request):
@@ -210,24 +216,39 @@ def user_login(request):
 
 
 
+
+
+
 def addCode(request,task_id):
-    print(request.POST)
     try:
         code = request.POST.get("code_text")
-        print(code.request.POST.get('username'))
+        task  = Task.objects.get(pk=task_id)
+        link = "myFirstApp/static/venv/CodeRunner/testfiles/test_python.py"
+        linkS = "myFirstApp/static/venv/CodeRunner/"
+        # with open(link, "w") as Q:
+        #     Q.writelines(code)
+        # os.system("cd {} && python3 tests.py".format(linkS))
+
+
+        # tests = Test.objects.get(task = Task.object.get(id = task_id))
+        # print(tests)
+        print(code)
+        tests = Test.objects.filter(task = task)
+        for i in tests:
+            # ---> Initialization script
+            i.scriptInit(code)
+            # ---> Initialization input & output
+            i.fileInit()
+            # ---> run script
+            i.run()
+            # ---> check result
+            result = i.checkOut()
 
         score = int(0)
-        score = randint(60, 100)
-        print(score)
-        
-        co = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = Task.objects.get(pk=task_id), score = score)
-        print(co)
-        co.save()
-        taskEvery = Task.objects.get(pk=task_id)
-        # return render(request, 'myFirstApp/popTask.html', {'everyTask':taskEvery})#expection change key
-        # return HttpResponseRedirect(reverse_lazy('currentTask/{}/'.format(taskEvery.id)))
+        if result is not False:
+            score = randint(60, 100)
+        code = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = task, score = score, isSolved = result)
+        code.save()
         return currentTask(request, task_id) #баг
-        # return HttpResponseRedirect(reverse_lazy('currentTask', args=(task_id)))
     except:
         return HttpResponse('unSuccess')
-

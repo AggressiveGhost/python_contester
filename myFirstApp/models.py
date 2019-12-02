@@ -4,6 +4,8 @@ from django.contrib.auth.models import *
 from django.conf import settings
 from datetime import datetime    
 import os
+from myFirstApp.static.venv.CodeRunner import *
+from myFirstApp.static.venv.CodeRunner.testfiles import *
 
 
 # ---> User model
@@ -32,9 +34,35 @@ class Task(models.Model):
     task_text   = models.TextField(default="")
     clicks      = models.IntegerField(default=0)
     def __str__(self):
-        return self.id + " " + self.task_name
+        return str(self.id) + " " + self.task_name
 
+class Test(models.Model):
+    input       = models.TextField(default="")
+    output      = models.TextField(default="")
+    task        = models.ForeignKey(Task, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.id) + " " + self.task.task_name
 
+    def checkOut(self):
+        with open("myFirstApp/static/venv/CodeRunner/result.txt", "r") as i:
+            output = i.read()
+            return self.output == output.replace('\n','')
+            
+    def run(self):
+        os.system("cd myFirstApp/static/venv/CodeRunner/ && python3 tests.py")
+
+    def scriptInit(self, code):
+        with open("myFirstApp/static/venv/CodeRunner/testfiles/test_python.py", "w") as i:
+            i.writelines(code)
+
+    def fileInit(self):
+        with open("myFirstApp/static/venv/CodeRunner/testfiles/input.txt", "w") as i:
+            i.writelines(self.input)
+
+        with open("myFirstApp/static/venv/CodeRunner/testfiles/output.txt", "w") as i:
+            i.writelines(self.output)
+
+    
 
 # ---> Code model
 class Code(models.Model):
