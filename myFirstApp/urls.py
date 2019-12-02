@@ -14,6 +14,7 @@ urlpatterns = [
     path('forum', views.forum, name = 'forum'),
     path('ask', views.ask, name = 'ask'),
     path('addQuestion', views.addQuestion, name = 'addQuestion'),
+    path('question', views.question, name = 'question'),
 
     path('rating', views.rating ,name ='rating' ),
     path('userpage', views.userpage ,name = 'userpage'),

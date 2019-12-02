@@ -37,7 +37,7 @@
                 <p>views</p>
             </div>
 
-            <div class="col-12 col-md-8"><font  size ="5" face="Arial"><a href = {% url 'index' %}>{{i.title}}</a></font>
+            <div class="col-12 col-md-8"><font  size ="5" face="Arial"><a href = {% url 'question' %}>{{i.title}}</a></font>
                 <div class="d-flex flex-row-reverse">
                     {{i.user.username}}
                     <p><img src="{{ i.user.avatar.url }}" width="25" height="25" alt="" class="round"></p>

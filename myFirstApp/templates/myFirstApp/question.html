@@ -1,0 +1,115 @@
+{% extends 'myFirstApp/index.html' %}
+
+
+{% block body_block %}
+
+<style>
+        #fr{
+                background: #ebebeb;
+          }
+          #fr a:hover{
+            color: red;
+          }
+
+         .round {
+            border-radius: 100px;
+            box-shadow: 0 0 7px #666;
+         }
+         #gr button:hover{
+            color:green;
+         }
+     </style>
+
+    <div class="container" id="fr">
+        <img src="img/logo.svg" width="25" height="25" alt="" class="round">   {{i.user.username}}
+        <div class= "col">
+            <div class="row justify-content-end">
+                <p><font size = "2">12.10.2019</font></p>
+            </div>
+        </div>
+        <h1>Title</h1>
+        <p><font size="6"  face="Arial">Python the best program language</font></p>
+
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">
+                    <div class="row">
+                        <div class= "col">
+                        <img src="img/logo.svg" width="25" height="25" alt="" class="round">  {{i.user.username}}
+                        <p><font size = "2">12.10.2019 </font> </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse bd-highlight">
+                        <button style width="50" height="50" type="button" class="btn btn-info">Report</button>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">
+                    <p> I think....blaaa blaa</p>
+                    <div class="row">
+                        <div class="col">
+                            <a href="#"><i class="fas fa-thumbs-up" ></i></a><p>667</p>
+                        </div>
+                        <div class="col">
+                            <div class="row justify-content-end" id="gr">
+                                <button type="button" class="btn btn-link"><i class="fas fa-check-circle"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">
+                    <div class="row">
+                        <div class= "col">
+                        <img src="img/logo.svg" width="25" height="25" alt="" class="round">  {{i.user.username}}
+                        <p><font size = "2">12.10.2019 </font> </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse bd-highlight">
+                        <button style width="50" height="50" type="button" class="btn btn-info">Report</button>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">
+                    <p> I think....blaaa blaa</p>
+                    <div class="row">
+                        <div class="col">
+                            <a href="#"><i class="fas fa-thumbs-up" ></i></a><p>667</p>
+                        </div>
+                        <div class="col">
+                            <div class="row justify-content-end" id="gr">
+                                <button type="button" class="btn btn-link"><i class="fas fa-check-circle"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <div class= "row">
+            <div class="col">
+                <img src="img/logo.svg" width="25" height="25" alt="" class="round">   {{i.user.username}}
+            </div>
+        </div>
+        <div class= "row justify-content-center">
+            <textarea name="code_text" rows="2" cols="150px" placeholder="Input your code here " onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">
+            </textarea>
+            <button  class="btn btn-link" type="button" name="button"> <i class="fas fa-share"></i></button>
+        </div>
+        </tr>
+    </div>
+
+
+{% endblock  %}

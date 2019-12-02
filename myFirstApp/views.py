@@ -78,6 +78,9 @@ def currentTask(request, task_id):
    
     return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
 
+def question(request):
+    return render(request, 'myFirstApp/question.html')
+
 
 
 def moreProblems(request):
