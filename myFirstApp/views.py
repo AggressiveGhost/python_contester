@@ -82,14 +82,14 @@ def currentTask(request, task_id):
 
 def moreProblems(request):
     allTask     = Task.objects.all()
-    title = 'all Tasks'
+    title = 'All Tasks'
     search_query = request.GET.get('search', '')
     if search_query:
         allTask = Task.objects.filter(task_name__icontains=search_query)
         title = 'Search result'
     else:
         allTask = Task.objects.all()
-    paginator   = Paginator(allTask,3) 
+    paginator   = Paginator(allTask,4) 
     page        = request.GET.get('page')
     allTask     = paginator.get_page(page)
     return render(request, 'myFirstApp/allTask.html', {'title':title,'task':allTask})
@@ -126,7 +126,7 @@ def userpage(request):
     print(request.user)
     user          = request.user
     # ---> set of codes
-    codes         = Code.objects.filter(user = user).order_by('-date')
+    codes         = Code.objects.filter(user = user, isSolved = True).order_by('-date')
     # ---> set of answers
     answers       = Answer.objects.filter(author = user).order_by('-likes')
     # ---> set of questions
@@ -220,6 +220,7 @@ def user_login(request):
 
 
 def addCode(request,task_id):
+    
     try:
         code = request.POST.get("code_text")
         task  = Task.objects.get(pk=task_id)
@@ -243,9 +244,11 @@ def addCode(request,task_id):
             i.run()
             # ---> check result
             result = i.checkOut()
-
+            if result is False:
+                break
+        
         score = int(0)
-        if result is not False:
+        if result != False and Code.objects.filter(user = request.user, isSolved = True).count() == 0:
             score = randint(60, 100)
         code = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = task, score = score, isSolved = result)
         code.save()

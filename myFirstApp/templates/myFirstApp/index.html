@@ -38,9 +38,11 @@
   <li class="nav-item">
     <a class="nav-link" href={% url 'forum' %}>Forum</a>
   </li>
+  {% if user.id != None %}
   <li class="nav-item">
     <a class="nav-link" href={% url 'userpage' %}>About Me</a>
   </li>
+  {% endif %}
   <li class="nav-item">
     <a class="nav-link" href={% url 'rating' %}>Rating</a>
   </li>
@@ -59,7 +61,7 @@
           <a class="dropdown-item" href={% url 'user_logout' %}> Logout </a>
         {% else %}
           <a class="dropdown-item" href={% url 'user_login' %}>Sign In</a>
-          <a class="dropdown-item" href={% url 'register' %}>Registr</a>
+          <a class="dropdown-item" href={% url 'register' %}>Sign Up</a>
         {% endif %}
         </div>
       </li>

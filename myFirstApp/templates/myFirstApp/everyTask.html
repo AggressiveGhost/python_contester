@@ -42,22 +42,6 @@
     </div>
 </div>
 
-{% comment %}
-
-<div >
-{% for i in dic.code %}
-    <ul>{{i.date}}</ul>
-    <ul>Python 3.7</ul>
-    <ul>{{i.score}}</ul>
-    {% if i.isSolved == False %}
-    <ul>NO</ul>
-    {% else %} <ul>YES</ul>
-    {% endif %}
-    <button>Code</button>
-    <p>{{i.task_code}}</p>
-    <br>
-    {% endfor %}
-</div>  {% endcomment %}
 <br> <br> <br>
 <div class="container">
 {% for i in dic.code %}
