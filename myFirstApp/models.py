@@ -4,14 +4,24 @@ from django.contrib.auth.models import *
 from django.conf import settings
 from datetime import datetime    
 import os
-# ---> User Model
+
+
+# ---> User model
 class UserProfileInfo(models.Model):
     user        = models.OneToOneField(User,on_delete=models.CASCADE)
     link        = models.URLField(blank=True)
     avatar      = models.ImageField(upload_to='profile_pics',blank=True,default='profile_pics/user.png')
-
     def __str__(self):
         return self.user.username
+
+# ---> News model
+class New(models.Model):
+    title       = models.TextField(default="")
+    text        = models.TextField(default="")
+    img         = models.ImageField(upload_to='news_img/',blank=True, default='news_img/news.png')
+    date        = models.DateTimeField(default=datetime.now, blank=True)
+    def __str__(self):
+        return self.title
 
 
 
@@ -21,9 +31,8 @@ class Task(models.Model):
     task_img    = models.ImageField(upload_to='task_img/', default='NULL')
     task_text   = models.TextField(default="")
     clicks      = models.IntegerField(default=0)
-
     def __str__(self):
-        return str("{0} {1}".format(self.id ,self.task_name))
+        return self.id + " " + self.task_name
 
 
 
@@ -35,7 +44,6 @@ class Code(models.Model):
     date        = models.DateTimeField(default=datetime.now, blank=True)
     score       = models.IntegerField(default=0)
     isSolved    = models.BooleanField(default=False)
-
     def __str__(self):
         return self.task.task_name + " " + self.user.username + " " + self.date.strftime("%H:%M:%S")
 
@@ -50,7 +58,6 @@ class Question(models.Model):
     date        = models.DateTimeField(default=datetime.now, blank=True)
     isSolved    = models.BooleanField(default=False)
     clicks      = models.IntegerField(default=0)
-
     def __str__(self):
         return  self.user.username + " " + self.title 
 
@@ -65,7 +72,7 @@ class Answer(models.Model):
     isHelped    = models.BooleanField(False) # <--- Can change only author of Question
     likes       = models.IntegerField(default=0)
     def __str__(self):
-        return str(self.author.username)
+        return self.author.username
     
 
     
