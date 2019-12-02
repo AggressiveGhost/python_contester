@@ -22,13 +22,18 @@ def index(request):
     solved  = Code.objects.filter(isSolved = False).count() 
      # ---> Last 3 popular Tasks
     popular = Task.objects.filter(clicks__gt = 3).order_by('-clicks')[:3]
-
+    # ---> Last 3 news by date
+    news    = New.objects.order_by('-date')[:3]
+    
     dic = {
+        'news':news,
+        'title':'Polular Tasks',
+        'task':popular,
         'countTask':tasks,
         'countUser':users,
         'countSolved':solved
     }
-    return render(request, 'myFirstApp/popTask.html', context={'title':'Polular Tasks','task':popular, 'dic':dic})
+    return render(request, 'myFirstApp/popTask.html', context={'dic':dic})
 
 
 def forum(requrest):

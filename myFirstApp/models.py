@@ -18,7 +18,7 @@ class UserProfileInfo(models.Model):
 class New(models.Model):
     title       = models.TextField(default="")
     text        = models.TextField(default="")
-    img         = models.ImageField(upload_to='news_img/',blank=True, default='news_img/news.png')
+    news_img         = models.ImageField(upload_to='news_img',  default='news_img/news.png')
     date        = models.DateTimeField(default=datetime.now, blank=True)
     def __str__(self):
         return self.title

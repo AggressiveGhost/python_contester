@@ -65,41 +65,56 @@
 
 
 {% comment %} NEWS {% endcomment %}
+{% comment %} <img src = "static/news.png" width="300" height="400"alt =""> {% endcomment %}
 <br><br>
 <div id= "dg">
-      <center><h4>News</h4></center>
-      <br>
+  <center><h4>News</h4></center><br>
     <div class="container">
-      <p><a name="popular"></a>
-    <div class="row justify-content-md-center">
+      <a name="popular"></a>
+        <div class="row justify-content-md-center">
 
-        <br>
-        <div class="col-lg-4">
-          <div class="tilt">
-            <button><a href="#"><img src = "static/news.png" width="300" height="400" alt =""></a></button>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="tilt">
-            <a href="#"><img src = "static/news.png" width="300" height="400"alt =""></a>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="tilt">
-            <a href="#"><img src = "static/news.png"width="300" height="400" alt =""></a>
-          </div>
-        </div>
+{% for new in dic.news %}
+
+<!-- Button trigger modal -->
+<button type="button"data-toggle="modal" data-target="#{{new.id}}">
+  <img src = "{{new.news_img.url}}" width="300" height="400"alt ="">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id={{ new.id }} tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{new.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </p>
+      <div class="modal-body">
+        {{new.text}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
+</div>
+{% endfor %}
+
+
+
+
+
+    </div>    
+  </div>
+</div>
 
 
 
 {% comment %} Popular Tasks {% endcomment %}
 <div id="lg"> 
 <br><br>
-   <center> <h4>{{ title }}</h4></center>
+   <center> <h4>{{ dic.title }}</h4></center>
     <br>
     
     <div class="container">
@@ -107,7 +122,7 @@
 
         <br><br>
 
-    {% for i in task %}
+    {% for i in dic.task %}
         <div class="tilt2">
             <div class="col-lg-10 col-lg-offset-4">
                 <a href={%url 'currentTask' i.id%}><img src="{{ i.task_img.url }}" width="180" height="180" alt=""> </a>
