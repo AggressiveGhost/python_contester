@@ -78,7 +78,13 @@ def currentTask(request, task_id):
    
     return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
 
-def question(request):
+def question(request, id):
+    question = Question.objects.get(id = id)
+    answers = Answer.objects.filter(question = question)
+    dic = {
+        'question':question,
+        'answers':answers
+    }
     return render(request, 'myFirstApp/question.html')
 
 
