@@ -37,6 +37,41 @@ def index(request):
     return render(request, 'myFirstApp/popTask.html', context={'dic':dic})
 
 
+def userpage(request):
+    print(request.user)
+    user          = request.user
+    # ---> set of codes
+    codes         = Code.objects.filter(user = user, isSolved = True).order_by('-date')
+    # ---> set of answers
+    answers       = Answer.objects.filter(author = user).order_by('-likes')
+    # ---> set of questions
+    questions     = Question.objects.filter(user = user).order_by('-clicks')
+
+    codeCount     = codes.filter(isSolved = True).count()
+    taskCount     = Task.objects.all().count()
+    level = "width: {}%;".format(int((codeCount/taskCount)*100))
+    print(level)
+    number = int((codeCount/taskCount)*100)
+    # answerCount = answers.filter(isHelped = False).count()
+    answerCount   = answers.count()
+    # questionCount = questions.filter(clicks__gt = 3).count()
+    questionCount = questions.count()
+
+    dic = {
+        'codeCount':codeCount,
+        'answerCount':answerCount,
+        'questionCount':questionCount,
+
+        'codes':codes,
+        'answers':answers,
+        'questions':questions,
+        'level':level,
+        'number':number,
+    }
+
+    return render(request, 'myFirstApp/userPage.html', {'dic':dic})
+
+
 def forum(requrest):
     dic = dict()
     questions  = Question.objects.order_by('-date')
@@ -47,7 +82,6 @@ def forum(requrest):
 
 def ask(request):
     return render(request, 'myFirstApp/ask.html')
-
 
 
 def addQuestion(request):
@@ -62,30 +96,30 @@ def addQuestion(request):
     except:
         return HttpResponse('W*f whats going on!s')
 
-
-
-def currentTask(request, task_id):
-    dic                 = dict()
-    currentTask         = Task.objects.get(id = task_id)
-    dic['currentTask']  = currentTask
-
-    # ---> Increase number of clics
-    currentTask.clicks  += 1
-    # ---> Codes of current User
-    if request.user.id  != None:
-        code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
-        dic['code'] = code
-   
-    return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
-
 def question(request, id):
     question = Question.objects.get(id = id)
-    answers = Answer.objects.filter(question = question)
+    question.clicks += 1
+    question.save()
+    print(question.clicks)
+    answers = Answer.objects.filter(question = question).order_by('-date')
     dic = {
         'question':question,
         'answers':answers
     }
-    return render(request, 'myFirstApp/question.html')
+    return render(request, 'myFirstApp/question.html', {'dic':dic})
+
+
+def addAnswer(request, id):
+    try:
+        question        = Question.objects.get(id = id)
+        text            = request.POST.get("text")
+        user            = User.objects.get(username = request.POST.get('username'))
+        answer          = Answer(question = question, text = text, author = user)
+        answer.save()
+        return HttpResponseRedirect(reverse_lazy('forum'))
+    except Exception as e:
+        print(e)
+        return HttpResponse("what's going on!")
 
 
 
@@ -102,6 +136,52 @@ def moreProblems(request):
     page        = request.GET.get('page')
     allTask     = paginator.get_page(page)
     return render(request, 'myFirstApp/allTask.html', {'title':title,'task':allTask})
+
+
+
+def currentTask(request, task_id):
+    dic                 = dict()
+    currentTask         = Task.objects.get(id = task_id)
+    dic['currentTask']  = currentTask
+
+    # ---> Increase number of clics
+    currentTask.clicks  += 1
+    currentTask.save()
+    # ---> Codes of current User
+    if request.user.id  != None:
+        code = Code.objects.filter(user = request.user, task = currentTask).order_by('-date')
+        dic['code'] = code
+   
+    return render(request, 'myFirstApp/everyTask.html', {'dic':dic}) 
+
+
+
+
+def addCode(request,task_id):
+    try:
+        code = request.POST.get("code_text")
+        task  = Task.objects.get(pk=task_id)
+        tests = Test.objects.filter(task = task)
+        for i in tests:
+            # ---> Initialization script
+            i.scriptInit(code)
+            # ---> Initialization input & output
+            i.fileInit()
+            # ---> run script
+            i.run()
+            # ---> check result
+            result = i.checkOut()
+            if result is False:
+                break
+        
+        score = int(0)
+        if result != False and Code.objects.filter(user = request.user, isSolved = True).count() == 0:
+            score = randint(60, 100)
+        code = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = task, score = score, isSolved = result)
+        code.save()
+        return currentTask(request, task_id) 
+    except:
+        return HttpResponse('unSuccess')
 
 
 def rating(request):
@@ -125,54 +205,18 @@ def rating(request):
     diсScore = sorted(diсScore.items(),key = lambda x : x[0])
     return render(request, 'myFirstApp/rayting.html', {'dicScore':diсScore})
 
+
+
 def signIn(request):
     return render(request, 'myFirstApp/signIn.html')
 
 def signUp(request):
     return render(request, 'myFirstApp/signUp.html')
 
-def userpage(request):
-    print(request.user)
-    user          = request.user
-    # ---> set of codes
-    codes         = Code.objects.filter(user = user, isSolved = True).order_by('-date')
-    # ---> set of answers
-    answers       = Answer.objects.filter(author = user).order_by('-likes')
-    # ---> set of questions
-    questions     = Question.objects.filter(user = user).order_by('-clicks')
-
-    codeCount     = codes.filter(isSolved = False).count()
-    # answerCount = answers.filter(isHelped = False).count()
-    answerCount   = answers.count()
-    # questionCount = questions.filter(clicks__gt = 3).count()
-    questionCount = questions.count()
-
-    dic = {
-        'codeCount':codeCount,
-        'answerCount':answerCount,
-        'questionCount':questionCount,
-
-        'codes':codes,
-        'answers':answers,
-        'questions':questions
-    }
-
-    return render(request, 'myFirstApp/userPage.html', {'dic':dic})
-
-
-
-
-
-
-# @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
     
-
-
-
-
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -203,7 +247,6 @@ def register(request):
                            'registered':registered})
 
 
-
 def user_login(request):
     if request.method == 'POST':
         username      = request.POST.get('username')
@@ -227,40 +270,4 @@ def user_login(request):
 
 
 
-
-def addCode(request,task_id):
-    
-    try:
-        code = request.POST.get("code_text")
-        task  = Task.objects.get(pk=task_id)
-        link = "myFirstApp/static/venv/CodeRunner/testfiles/test_python.py"
-        linkS = "myFirstApp/static/venv/CodeRunner/"
-        # with open(link, "w") as Q:
-        #     Q.writelines(code)
-        # os.system("cd {} && python3 tests.py".format(linkS))
-
-
-        # tests = Test.objects.get(task = Task.object.get(id = task_id))
-        # print(tests)
-        print(code)
-        tests = Test.objects.filter(task = task)
-        for i in tests:
-            # ---> Initialization script
-            i.scriptInit(code)
-            # ---> Initialization input & output
-            i.fileInit()
-            # ---> run script
-            i.run()
-            # ---> check result
-            result = i.checkOut()
-            if result is False:
-                break
-        
-        score = int(0)
-        if result != False and Code.objects.filter(user = request.user, isSolved = True).count() == 0:
-            score = randint(60, 100)
-        code = Code(user = User.objects.get(username= request.POST.get('username')), task_code = code, task = task, score = score, isSolved = result)
-        code.save()
-        return currentTask(request, task_id) #баг
-    except:
-        return HttpResponse('unSuccess')
+   

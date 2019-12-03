@@ -15,7 +15,7 @@ urlpatterns = [
     path('ask', views.ask, name = 'ask'),
     path('addQuestion', views.addQuestion, name = 'addQuestion'),
     path('question <int:id>', views.question, name = 'question'),
-
+    path('addAnswer <int:id>', views.addAnswer, name = 'addAnswer'),
     path('rating', views.rating ,name ='rating' ),
     path('userpage', views.userpage ,name = 'userpage'),
     
@@ -23,4 +23,5 @@ urlpatterns = [
     path('register', views.register,name='register'),
     path('user_login', views.user_login, name='user_login'),
     path('user_logout', LogoutView.as_view(next_page = reverse_lazy('index')), name = 'user_logout'),
+
 ]

@@ -97,7 +97,7 @@ class Answer(models.Model):
     text        = models.TextField(default="")
     date        = models.DateTimeField(default=datetime.now, blank=True)
     author      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    isHelped    = models.BooleanField(False) # <--- Can change only author of Question
+    isHelped    = models.BooleanField(default = False) # <--- Can change only author of Question
     likes       = models.IntegerField(default=0)
     def __str__(self):
         return self.author.username

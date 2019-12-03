@@ -96,3 +96,19 @@
   color:#ff7878;
 }
 
+#fr{
+                background: #ebebeb;
+          }
+          #fr a:hover{
+            color: red;
+          }
+
+         .round {
+            border-radius: 100px;
+            box-shadow: 0 0 7px #666;
+         }
+         #gr button:hover{
+            color:green;
+         }
+
+
