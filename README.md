@@ -8,4 +8,6 @@ STEPS{
   3) pip install Pilow
   4) pip install coderunner
   4) run project (python manage,py runserver) 
+
+
 }
