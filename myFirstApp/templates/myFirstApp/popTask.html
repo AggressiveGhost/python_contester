@@ -72,12 +72,14 @@
         <div class="row justify-content-md-center">
 
 {% for new in dic.news %}
-
+<div class="col-sm">
 <!-- Button trigger modal -->
-<button type="button"data-toggle="modal" data-target="#{{new.id}}">
+<button type="button" class="btn btn-link" data-toggle="modal" data-target="#{{new.id}}">
+ <div id ="news">
   <img src = "{{new.news_img.url}}" width="300" height="400"alt ="">
+  </div>
 </button>
-
+</div>
 <!-- Modal -->
 <div class="modal fade" id={{ new.id }} tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -138,23 +140,36 @@
   </div>
 
 {% comment %} Statistics {% endcomment %}
-
+ 
       <div id ="r">
 
     <div class="container">
       <div class="row justify-content-md-center">
 
         <div class="col-lg-8 col-lg-offset-2">
-          <h4>Statistics</h4>
-            <p> <font size="7" face="Wide latin"> {{ dic.countTask }}</font>
-            <font size="5" face="Wide latin">Tasks</font></p>
-            <p> <font size="7" face="Wide latin">{{dic.countSolved}}</font>
+          <h4><center>Statistics</cenet> </h4>
+        <div class="row">
+
+    <div class="col-sm">
+
+     <p>  <font size="10" face="Wide latin"> {{ dic.countTask }}</font>
+           <font size="5" face="Wide latin">Tasks</font></p>
+    </div>
+    <div class="col-sm">
+    <p>
+  <font size="10" face="Wide latin">{{dic.countSolved}}</font>
             <font size="5" face="Wide latin">Times solved</font></p>
-            <p><font size="5" face="Wide latin"> by </font> <font size="7" face="Wide latin">{{ dic.countUser}} </font><font size="5" face="Wide latin">Users</font> </p>
-          </div>
+    </div>
+    <div class="col-sm">
+    <p>
+    <font size="5" face="Wide latin"> by </font> <font size="10" face="Wide latin">{{ dic.countUser}} </font><font size="5" face="Wide latin">Users</font> </p>
     </div>
       </div>
+     
 
+    </div>
+    </div>
+    </div>
     </div>
 
 

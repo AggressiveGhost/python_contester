@@ -63,7 +63,7 @@
 }
 
 #r{
-  background: linear-gradient(to top left, gray, purple,pink,gray);
+  background: linear-gradient(to top ,#000000, #172E34,#155768,#13748D, #7FC5D5,#ABC9D0,#DFE8EA);
   padding-top: 70px;
   padding-bottom: 70px;
 }
@@ -85,12 +85,15 @@
 #f{
 
   background: #000000;
+  
+  
 
 }
 #f i{
   color: #bdbdbd;
   font-size: 30px;
   padding: 20px;
+  
 }
 #f i:hover{
   color:#ff7878;
@@ -110,5 +113,11 @@
          #gr button:hover{
             color:green;
          }
+#news img{
+  border-radius: 5px;
+}
 
 
+/*  */
+/*  */
+/*  */

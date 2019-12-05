@@ -173,7 +173,7 @@ def addCode(request,task_id):
             result = i.checkOut()
             if result is False:
                 break
-        
+            
         score = int(0)
         if result != False and Code.objects.filter(user = request.user, isSolved = True).count() == 0:
             score = randint(60, 100)

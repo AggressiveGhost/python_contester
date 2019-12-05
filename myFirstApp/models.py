@@ -4,9 +4,6 @@ from django.contrib.auth.models import *
 from django.conf import settings
 from datetime import datetime    
 import os
-from myFirstApp.static.venv.CodeRunner import *
-from myFirstApp.static.venv.CodeRunner.testfiles import *
-
 
 # ---> User model
 class UserProfileInfo(models.Model):
@@ -44,22 +41,22 @@ class Test(models.Model):
         return str(self.id) + " " + self.task.task_name
 
     def checkOut(self):
-        with open("myFirstApp/static/venv/CodeRunner/result.txt", "r") as i:
+        with open("myFirstApp/static/venv/result.txt", "r") as i:
             output = i.read()
             return self.output == output.replace('\n','')
             
     def run(self):
-        os.system("cd myFirstApp/static/venv/CodeRunner/ && python3 tests.py")
+        os.system("cd myFirstApp/static/venv/ && source bin/activate && python3 tests.py")
 
     def scriptInit(self, code):
-        with open("myFirstApp/static/venv/CodeRunner/testfiles/test_python.py", "w") as i:
+        with open("myFirstApp/static/venv/testfiles/test_python.py", "w") as i:
             i.writelines(code)
 
     def fileInit(self):
-        with open("myFirstApp/static/venv/CodeRunner/testfiles/input.txt", "w") as i:
+        with open("myFirstApp/static/venv/testfiles/input.txt", "w") as i:
             i.writelines(self.input)
 
-        with open("myFirstApp/static/venv/CodeRunner/testfiles/output.txt", "w") as i:
+        with open("myFirstApp/static/venv/testfiles/output.txt", "w") as i:
             i.writelines(self.output)
 
     
